@@ -6,8 +6,10 @@ def msdial2anndata(filepath):
     return adata
 
 def to_anndata(df: pd.DataFrame) -> ad.AnnData:
-    df_row = df.iloc[:, 0:28]
-    df_col = df.iloc[:, 28:]
+    first_row = df.iloc[0]
+    var_start_index = firstrow[firstrow == 'Class'].index[0]
+    df_row = df.iloc[:, 0:var_start_index]
+    df_col = df.iloc[:, var_start_index:]
 
     df_col_avgstd_removed = df_col.loc[:, ~df_col.iloc[3].str.contains('Average|Stdev')]
     counts = df_col_avgstd_removed.iloc[5:]
