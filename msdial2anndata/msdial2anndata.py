@@ -2,12 +2,12 @@ import pandas as pd
 import anndata as ad
 
 def msdial2anndata(filepath):
-    adata = to_anndata(pd.read_csv(uploaded_file, sep='\t', header=None))
+    adata = to_anndata(pd.read_csv(filepath, sep='\t', header=None))
     return adata
 
 def to_anndata(df: pd.DataFrame) -> ad.AnnData:
     first_row = df.iloc[0]
-    var_start_index = firstrow[firstrow == 'Class'].index[0]
+    var_start_index = first_row[first_row == 'Class'].index[0]
     df_row = df.iloc[:, 0:var_start_index]
     df_col = df.iloc[:, var_start_index:]
 
