@@ -8,8 +8,8 @@ def msdial2anndata(filepath):
 def to_anndata(df: pd.DataFrame) -> ad.AnnData:
     first_row = df.iloc[0]
     var_start_index = first_row[first_row == 'Class'].index[0]
-    df_row = df.iloc[:, 0:var_start_index]
-    df_col = df.iloc[:, var_start_index:]
+    df_row = df.iloc[:, 0:var_start_index+1]
+    df_col = df.iloc[:, var_start_index+1:]
 
     df_col_avgstd_removed = df_col.loc[:, ~df_col.iloc[3].str.contains('Average|Stdev')]
     counts = df_col_avgstd_removed.iloc[5:]
@@ -38,4 +38,3 @@ def to_anndata(df: pd.DataFrame) -> ad.AnnData:
     adata.var["Batch ID"] = list(df_col_avgstd_removed.iloc[3])
 
     return adata
-    
